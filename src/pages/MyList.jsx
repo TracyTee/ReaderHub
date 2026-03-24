@@ -6,8 +6,8 @@ import { useAuth } from "../context/AuthContext";
 import BookModal from "../components/BookModal";
 import ErrorBoundary from "../components/ErrorBoundary";
 
-// 🔑 Replace with your Google Books API key
-const GOOGLE_BOOKS_API_KEY = "AIzaSyAewyqTUQeRIg5iKV-aKlZISb9XhbTQRlc";
+
+const GOOGLE_BOOKS_API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
 const STATUS_OPTIONS = ["not-started", "reading", "finished"];
 const STATUS_LABELS = { "not-started": "Not Started", reading: "Reading", finished: "Finished" };
