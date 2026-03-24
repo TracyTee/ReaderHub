@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Search from "./pages/Search";
 import MyList from "./pages/MyList";
 import Profile from "./pages/Profile";
+import Events from "./pages/Events";    
 import "./styles.css";
 
 // Scroll to top on route change
@@ -44,6 +45,7 @@ function AppShell() {
                             <ErrorBoundary>
                                 <Routes>
                                     <Route path="/" element={<Home />} />
+                                    <Route path="/events" element={<Events />} />
                                     <Route path="/search" element={<Search />} />
                                     <Route path="/list" element={<MyList />} />
                                     <Route path="/profile" element={<Profile />} />

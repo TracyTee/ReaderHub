@@ -42,6 +42,13 @@ export default function Navbar() {
                     My List
                 </NavLink>
                 <NavLink
+                    to="/events"
+                    className={({ isActive }) => `navbar-link ${isActive ? "active" : ""}`}
+                    aria-label="Events"
+                >
+                    Event Hub
+                </NavLink>
+                <NavLink
                     to="/profile"
                     className={({ isActive }) => `navbar-link ${isActive ? "active" : ""}`}
                     aria-label="My profile"
