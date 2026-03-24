@@ -66,9 +66,16 @@ export default function Profile() {
         // Current goal = books with status reading or not-started in reading_list
         const q = query(collection(db, "users", user.uid, "reading_list"));
         const unsubList = onSnapshot(q, (snap) => {
-            const active = snap.docs.filter((d) =>
-                d.data().status === "reading" || d.data().status === "not-started"
-            );
+        const allBooks = snap.docs.map((d) => d.data());
+
+        // 1. Books Read: Count only those marked as "finished"
+        const finishedBooks = allBooks.filter((b) => b.status === "finished");
+        setLifetimeCount(finishedBooks.length);
+
+        // 2. On My List: Count books currently being read or not started
+        const activeBooks = allBooks.filter((b) => 
+            b.status === "reading" || b.status === "not-started"
+        );
             setGoalCount(active.length);
         });
 
