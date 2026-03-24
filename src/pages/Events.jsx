@@ -91,7 +91,7 @@ export default function Events() {
                 {filteredEvents.length > 0 ? (
                     <ul className="reading-list"> {/* Use reading-list column layout */}
                         {filteredEvents.map(event => (
-                            <EventCard key={event.id} event={event} />
+                            <EventCard key={event.id} event={event} activeTab={activeTab} />
                         ))}
                     </ul>
                 ) : (

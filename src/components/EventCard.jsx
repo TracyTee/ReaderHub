@@ -1,15 +1,16 @@
 import { useAuth } from "../context/AuthContext";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { arrayUnion, arrayRemove } from "firebase/firestore";
 import { useState } from "react"; 
 import EventForm from "./EventForm"; 
 
-export default function EventCard({ event }) {
+export default function EventCard({ event, activeTab }) {
     const { user } = useAuth();
     const isAttending = event.attendees?.includes(user?.uid);
     const [isEditing, setIsEditing] = useState(false);
     const isOwner = user?.uid === event.createdBy;
+    const canManage = isOwner && activeTab === 'created';
 
     // Format date and time for display
     const eventDate = event.date.toDate();
@@ -22,6 +23,19 @@ export default function EventCard({ event }) {
         await updateDoc(ref, {
             attendees: isAttending ? arrayRemove(user.uid) : arrayUnion(user.uid)
         });
+    };
+
+    const handleDelete = async (e) => {
+        e.stopPropagation();
+        if (window.confirm("Are you sure you want to delete this event?")) {
+            try {
+                const eventRef = doc(db, "events", event.id);
+                await deleteDoc(eventRef);
+            } catch (error) {
+                console.error("Error deleting event: ", error);
+                alert("Failed to delete event.");
+            }
+        }
     };
 
     if (isEditing) {
@@ -60,13 +74,21 @@ export default function EventCard({ event }) {
             <div className="list-actions">
 
                 {/* Show Edit button only if user is the creator */}
-                {isOwner && (
-                    <button 
-                        className="btn btn-sm btn-ghost" 
-                        onClick={() => setIsEditing(true)}
-                    >
-                        Edit
-                    </button>
+                {canManage && (
+                    <>
+                        <button 
+                            className="btn btn-sm btn-ghost" 
+                            onClick={() => setIsEditing(true)}
+                        >
+                            Edit
+                        </button>
+                        <button 
+                            className="btn btn-sm btn-danger" 
+                            onClick={handleDelete}
+                        >
+                            Delete
+                        </button>
+                    </>
                 )}
                 <button 
                     className={`btn btn-sm ${isAttending ? 'btn-ghost' : 'btn-primary'}`} 
