@@ -21,6 +21,14 @@ export function AuthProvider({ children }) {
         });
         return unsub;
     }, []);
+    
+    // ── Global Theme Sync ──
+    // This ensures that as soon as the profile is loaded (or cleared), 
+    // the theme matches the current state.
+    useEffect(() => {
+        const activeTheme = profile?.theme || "light";
+        document.documentElement.setAttribute("data-theme", activeTheme);
+    }, [profile]);
 
     const refreshProfile = async () => {
         if (!user) return;
@@ -28,7 +36,12 @@ export function AuthProvider({ children }) {
         setProfile(snap.exists() ? snap.data() : null);
     };
 
-    const logout = () => signOut(auth);
+    // Reset theme to light immediately on logout to prevent 
+    // the next user from seeing the previous theme.
+    const logout = async () => {
+        await signOut(auth);
+        document.documentElement.setAttribute("data-theme", "light");
+    };
 
     return (
         <AuthContext.Provider value={{ user, profile, refreshProfile, logout }}>
