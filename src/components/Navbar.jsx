@@ -1,3 +1,9 @@
+/** Navbar component — the top navigation bar for the app.
+ * Shows the app name, links to main sections (Home, Search, My List, Events, Profile), and a user avatar with a dropdown for profile and logout.
+ * Responsive design: on smaller screens, links collapse into a hamburger menu.
+ * Uses React Router's NavLink for navigation and active link styling.
+ * Gets user info from AuthContext to display the avatar and handle logout.
+ */
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
@@ -25,8 +31,8 @@ export default function Navbar() {
             </NavLink>
 
             {/* Hamburger Toggle Button */}
-            <button 
-                className={`hamburger ${isMenuOpen ? "active" : ""}`} 
+            <button
+                className={`hamburger ${isMenuOpen ? "active" : ""}`}
                 onClick={toggleMenu}
                 aria-label="Toggle navigation"
                 aria-expanded={isMenuOpen}
@@ -78,7 +84,7 @@ export default function Navbar() {
                 >
                     Profile
                 </NavLink>
-                
+
                 {/* Mobile-only Sign Out */}
                 <button className="nav-btn mobile-only" onClick={handleLogout}>
                     Sign out
@@ -90,7 +96,8 @@ export default function Navbar() {
                     className="nav-avatar"
                     aria-label={`Logged in as ${profile?.displayName || user?.email}`}
                     title={profile?.displayName || user?.email}
-                    onClick={() => {navigate("/profile");
+                    onClick={() => {
+                        navigate("/profile");
                         closeMenu();
                     }}
                     role="button"

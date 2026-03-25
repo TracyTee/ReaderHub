@@ -1,3 +1,8 @@
+/** ErrorBoundary component — catches JavaScript errors in child components and displays a fallback UI instead of crashing the whole app.
+ * Wraps around components that might throw errors, such as BookCard and BookModal.
+ * If an error occurs, it shows a user-friendly message and a button to try again (which resets the error state).
+ * Also logs the error details to the console for debugging.
+ */
 import { Component } from "react";
 
 class ErrorBoundary extends Component {

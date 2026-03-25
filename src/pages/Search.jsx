@@ -3,7 +3,6 @@ import BookCard from "../components/BookCard";
 import BookModal from "../components/BookModal";
 import ErrorBoundary from "../components/ErrorBoundary";
 
-// 🔑 Uses env variable — make sure VITE_GOOGLE_BOOKS_API_KEY is set in your .env
 const GOOGLE_BOOKS_API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
 const SEARCH_TYPES = [
@@ -44,6 +43,7 @@ export default function Search() {
     const [error, setError] = useState("");
     const [selected, setSelected] = useState(null);
 
+    console.log("API Key:", import.meta.env.VITE_GOOGLE_BOOKS_API_KEY);
     const runSearch = async (overrideSort) => {
         const q = query.trim();
         if (!q) return;

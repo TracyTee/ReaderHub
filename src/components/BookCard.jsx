@@ -1,11 +1,13 @@
-// BookCard — displays a book thumbnail, title, and author.
-// Used in Search results and the Home dashboard.
-
+/** BookCard component — displays a book thumbnail, title, and author.
+ * Used in Search results and the Home dashboard.
+ * CLickable book card that displaying book cover and basic info. 
+ * Tries Google thumbnail first, then Open Library cover if we have an ISBN. 
+ * If no cover, shows a placeholder.
+ */
 export default function BookCard({ book, onClick }) {
     const vol = book.volumeInfo || {};
     const googleThumb = vol.imageLinks?.thumbnail?.replace("http://", "https://");
 
-    // Try Google thumbnail first, then Open Library cover if we have an ISBN
     const isbn = (vol.industryIdentifiers || []).find(
         (id) => id.type === "ISBN_13" || id.type === "ISBN_10"
     )?.identifier;

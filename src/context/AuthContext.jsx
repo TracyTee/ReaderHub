@@ -1,3 +1,9 @@
+/** AuthContext — provides authentication state and user profile data to the app.
+ * Uses Firebase Authentication to track the current user and Firestore to fetch the user's profile (which includes theme preference).
+ * Exposes user, profile, refreshProfile, and logout functions to components via context.
+ * Automatically syncs the app's theme with the user's profile theme when it changes.
+ * On logout, resets the theme to light .
+ */
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
@@ -21,7 +27,7 @@ export function AuthProvider({ children }) {
         });
         return unsub;
     }, []);
-    
+
     // ── Global Theme Sync ──
     // This ensures that as soon as the profile is loaded (or cleared), 
     // the theme matches the current state.

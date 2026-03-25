@@ -83,3 +83,10 @@ This project uses the following APIs:
 ## Known Limitations or Bugs
 
 TBD
+
+## Challenges 
+- Combining development setups after working in seperate repos. Working with no aligned tree structure and firestore setup configuration proved slightly challenging when merging our branches. 
+
+- Accidental key leak into repo required new key generation and key rotation. Use of .env for the environment variables made the fix less painful.
+
+- Spent a signifcant amount of time trying to debug generic errors the APIs returned. Most were just rate limits which were ont explicitly called out. 

@@ -1,3 +1,10 @@
+/** MyList page — shows the user's reading list with options to filter by status, change status, and view details.
+ * Fetches the user's reading list from Firestore and displays it in a list format. 
+ * Each book shows its thumbnail, title, author, and current status (Not Started, Reading, Finished).
+ * Users can filter the list by status using buttons at the top. 
+ * Clicking a book opens a modal with detailed info and options to change status or write a review.
+ * Status changes and deletions are immediately reflected in the UI and saved to Firestore.
+ */
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs, updateDoc, deleteDoc, doc } from "firebase/firestore";

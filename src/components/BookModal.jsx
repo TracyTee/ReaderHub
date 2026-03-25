@@ -1,3 +1,9 @@
+/** BookModal component — shows detailed info about a book
+ * Allows user to add it to their reading list, set status, and write a review.
+ * Opens when a BookCard is clicked. Fetches saved data from Firestore to show current status, rating, and review if the book is already in the user's list.
+ * User can change reading status with a dropdown, and write/edit a review with a star rating and text area. 
+ * Changes are saved to Firestore.
+ */
 import { useState, useEffect } from "react";
 import { doc, getDoc, setDoc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
