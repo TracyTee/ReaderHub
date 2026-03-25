@@ -7,15 +7,21 @@ import EventForm from "./EventForm";
 
 export default function EventCard({ event, activeTab }) {
     const { user } = useAuth();
-    const isAttending = event.attendees?.includes(user?.uid);
+
+    // 1. Safety check for attendees array
+    const isAttending = event?.attendees?.includes(user?.uid) ?? false;
+    
     const [isEditing, setIsEditing] = useState(false);
-    const isOwner = user?.uid === event.createdBy;
+
+    const isOwner = user?.uid && event?.createdBy === user.uid;
     const canManage = isOwner && activeTab === 'created';
 
     // Format date and time for display
-    const eventDate = event.date.toDate();
-    const displayDateTime = eventDate.toLocaleDateString() + ' at ' + 
-                            eventDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    // Safe Date Formatting
+    const eventDate = event?.date?.toDate ? event.date.toDate() : null;
+    const displayDateTime = eventDate
+        ? eventDate.toLocaleDateString() + ' at ' + eventDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        : "Date TBD";
 
     const toggleRSVP = async (e) => {
         e.stopPropagation();
@@ -51,11 +57,12 @@ export default function EventCard({ event, activeTab }) {
 
     return (
         <li className="list-item" style={{ cursor: 'default' }}>
-            <img src={event.image} className="list-thumb" alt={event.title} loading="lazy" />
+            <img src={event?.image || "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=500"}
+             className="list-thumb" alt={event?.title || "Event"} loading="lazy" />
             
             <div className="list-info">
-                <div className="list-title">{event.title}</div>
-                <div className="list-author">{event.venue} • {displayDateTime}</div>
+                <div className="list-title">{event?.title ?? "Untitled Event"}</div>
+                <div className="list-author">{(event?.venue ?? "No venue")} • {displayDateTime}</div>
 
                 <div style={{ 
                     fontSize: '13px', 
@@ -63,11 +70,11 @@ export default function EventCard({ event, activeTab }) {
                     marginTop: '8px',
                     lineHeight: '1.4' 
                 }}>
-                    {event.description}
+                    {event?.description ?? "No description available."}
                 </div>
 
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
-                    Hosted by: {event.host}
+                    Hosted by: {event?.host ?? "Unknown"}
                 </div>
             </div>
 

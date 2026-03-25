@@ -44,6 +44,12 @@ export default function Events() {
     // Filter Logic
     const now = new Date();
     const filteredEvents = events.filter(e => {
+        
+        // Check if e.date exists and has the toDate method
+        if (!e.date || typeof e.date.toDate !== 'function') {
+            return false;
+        }
+
         const eventDate = e.date.toDate();
         if (activeTab === 'ongoing') {
             return eventDate.toDateString() === now.toDateString();
