@@ -144,6 +144,30 @@ export default function Profile() {
         //{ label: "Pages Today", value: pagesToday, isEditable: true },
     ];
 
+    // Theme setting
+    // 1. Sync the HTML attribute whenever the profile theme changes
+    useEffect(() => {
+        const currentTheme = profile?.theme || "light";
+        document.documentElement.setAttribute("data-theme", currentTheme);
+    }, [profile?.theme]);
+
+    // 2. Function to toggle and save to Firestore
+    const toggleTheme = async () => {
+        const newTheme = profile?.theme === "dark" ? "light" : "dark";
+        
+        try {
+            // Update the user document in Firestore
+            await setDoc(doc(db, "users", user.uid), {
+                theme: newTheme
+            }, { merge: true });
+            
+            // Refresh the context so the UI updates immediately
+            await refreshProfile(); 
+        } catch (err) {
+            console.error("Failed to save theme preference:", err);
+        }
+    };
+
     return (
         <div className="page-bg">
             <main className="page fade-up" aria-label="User profile">
@@ -180,6 +204,25 @@ export default function Profile() {
                             {user?.email}
                             {memberSince ? ` · Member since ${memberSince}` : ""}
                         </p>
+
+                        {/* Theme Toggle Button */}
+                        <div className="theme-toggle-container" style={{ marginTop: '16px' }}>
+                            <span className="profile-meta" style={{ marginBottom: '8px', display: 'block' }}>
+                                {profile?.theme === "dark" ? "Dark Mode" : "Light Mode"}
+                            </span>
+                            <label className="theme-switch" aria-label="Toggle Dark Mode">
+                                <input
+                                    type="checkbox"
+                                    onChange={toggleTheme}
+                                    checked={profile?.theme === "dark"}
+                                />
+                                <span className="theme-slider round">
+                                    <span className="icon-sun">☀️</span>
+                                    <span className="icon-moon">🌙</span>
+                                </span>
+                            </label>
+                        </div>                    
+                            
                         {profile?.favouriteGenre && (
                             <span className="badge badge-blue" style={{ marginTop: 8 }}>
                                 {profile.favouriteGenre}

@@ -1162,3 +1162,112 @@ a {
         text-align: center;
     }
 }
+
+/* ── Dark Theme Variables ── */
+[data-theme="dark"] {
+    --bg: #121414;
+    --bg2: #1a1d1d;
+    --bg3: #242828;
+    --border: #333d3c;
+    --border-hover: rgba(163, 193, 173, 0.4);
+    --text: #eef3f2;
+    --text-muted: #a0adaa;
+    --text-dim: #707e7b;
+    --accent: #6eb0ab; /* Lighter accent for dark mode contrast */
+    --accent2: #335C59;
+    --accent-glow: rgba(110, 176, 171, 0.15);
+    --green: #81c784;
+    --green-bg: rgba(129, 199, 132, 0.1);
+    --amber: #ffb74d;
+    --amber-bg: rgba(255, 183, 77, 0.1);
+}
+
+/* Ensure the navbar glass effect works in dark mode */
+[data-theme="dark"] .navbar {
+    background: rgba(18, 20, 20, 0.95);
+}
+
+/* Adjust card shadows for dark surfaces */
+[data-theme="dark"] .auth-card,
+[data-theme="dark"] .card {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Theme button*/
+/* Container and Label */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 54px;
+  height: 28px;
+}
+
+/* Hide default HTML checkbox */
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider track - Improved for Light Theme */
+.theme-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Use a slightly darker gray or a muted version of your text color for the track */
+  background-color: var(--text-dim, #d1d1d1); 
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle depth */
+}
+
+.theme-slider.round {
+  border-radius: 34px;
+}
+
+/* The sliding circle (The "Flip" part) */
+.theme-slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #ffffff;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  z-index: 2;
+  /* Added a stronger shadow so the white circle stands out against light backgrounds */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Icons inside the toggle */
+.icon-sun, .icon-moon {
+  font-size: 12px;
+  user-select: none;
+  z-index: 1;
+}
+
+/* Track color when Dark Mode is active */
+input:checked + .theme-slider {
+  background-color: var(--accent); /* Uses your project's accent color */
+  border-color: transparent;
+}
+
+/* Move the circle to the right when checked */
+input:checked + .theme-slider:before {
+  transform: translateX(26px);
+  background-color: #f0f0f0; /* Slightly off-white for dark mode comfort */
+}
+
+/* Focus indicator for keyboard navigation */
+input:focus + .theme-slider {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
