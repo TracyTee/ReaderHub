@@ -76,7 +76,7 @@ export default function Profile() {
         const activeBooks = allBooks.filter((b) => 
             b.status === "reading" || b.status === "not-started"
         );
-            setGoalCount(active.length);
+            setGoalCount(activeBooks.length);
         });
 
         return () => { unsubStats(); unsubList(); };

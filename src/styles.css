@@ -1271,3 +1271,93 @@ input:focus + .theme-slider {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+/* -- Hamburger menu style --*/
+/* --- Hamburger Icon --- */
+.hamburger {
+    display: none; /* Hidden on desktop */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 101;
+}
+
+.hamburger .bar {
+    width: 24px;
+    height: 2px;
+    background-color: var(--text);
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 640px) {
+    .hamburger {
+        display: flex;
+    }
+
+    /* Animate Hamburger to 'X' */
+    .hamburger.active .bar:nth-child(1) { transform: rotate(45deg); }
+    .hamburger.active .bar:nth-child(2) { opacity: 0; transform: translateX(20px); }
+    .hamburger.active .bar:nth-child(3) { transform: rotate(-45deg); }
+
+    .navbar-links {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: var(--nav-h);
+        left: 0;
+        width: 100%;
+        height: calc(100vh - var(--nav-h));
+        background: var(--bg);
+        padding: 32px;
+        gap: 8px;
+        transform: translateX(-100%); /* Start off-screen */
+        transition: transform 0.3s ease-in-out;
+        z-index: 100;
+        border-top: 1px solid var(--border);
+    }
+
+    .navbar-links.open {
+        transform: translateX(0); /* Slide in */
+    }
+
+    .navbar-link {
+        font-size: 18px;
+        padding: 16px;
+        width: 100%;
+        border-radius: var(--radius);
+    }
+
+    .navbar-link.active {
+        background: var(--accent-glow);
+    }
+
+    /* Helper Classes for Clean UI */
+    .desktop-only {
+        display: none !important;
+    }
+
+    .mobile-only {
+        display: flex !important;
+        margin-top: 20px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .navbar-right {
+        gap: 12px;
+    }
+}
+
+/* Desktop default for helper classes */
+.mobile-only {
+    display: none;
+}
