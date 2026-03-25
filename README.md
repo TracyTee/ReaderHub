@@ -9,7 +9,7 @@ ReaderHub is a web application for book lovers to discover new books, track thei
     *   Sort search results by relevance or newest publication date.
     *   Utilizes the Open Library Covers API as a fallback for missing book cover images.
 *   **Personalized Bookshelves:**
-    *   Save books to a personal "My List" to track reading progress (e.g., "Want to Read", "Reading", "Read").
+    *   Save books to a personal "My List" to track reading progress (e.g., "Reading", "Not Finished", "Finished").
     *   Add personal ratings and reviews to books you've read.
 *   **Community Event Hub:**
     *   Full event management: create, edit, and delete community events.
@@ -82,7 +82,11 @@ This project uses the following APIs:
 
 ## Known Limitations or Bugs
 
-TBD
+### 1. Event Date Handling
+* **Issue:** The `Events.jsx` logic relies on the Firestore `date` field having a `.toDate()` method.
+* **Impact:** If a document is manually added to Firestore without using a `Timestamp` object (e.g., as a plain string), the event will fail to render or crash the filter logic.
+* **Future Fix:** Implement stricter PropType validation and a fallback utility to parse strings into Date objects.
+
 
 ## Challenges 
 - Combining development setups after working in seperate repos. Working with no aligned tree structure and firestore setup configuration proved slightly challenging when merging our branches. 
@@ -90,3 +94,6 @@ TBD
 - Accidental key leak into repo required new key generation and key rotation. Use of .env for the environment variables made the fix less painful.
 
 - Spent a signifcant amount of time trying to debug generic errors the APIs returned. Most were just rate limits which were ont explicitly called out. 
+
+
+
